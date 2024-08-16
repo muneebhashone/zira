@@ -1,10 +1,10 @@
 import { Schema } from 'mongoose';
 import { getSprintsByProjectId } from '../sprint/sprint.services';
+import { UserType } from '../user/user.dto';
 import { getUserById } from '../user/user.services';
+import { ProjectType } from './project.dto';
 import { IProject, Project } from './project.model';
 import { ProjectInput, ProjectOptions } from './project.schema';
-import { ProjectWithSprintsType } from './project.types';
-import { UserType } from '../user/user.dto';
 
 export const createProject = async (
   projectData: ProjectInput,
@@ -44,7 +44,7 @@ export const addMemberToProject = async (
 export const getProjectById = async (
   projectId: string,
   options?: ProjectOptions,
-): Promise<ProjectWithSprintsType> => {
+): Promise<ProjectType> => {
   const project = await Project.findById(projectId).populate<{
     owner: UserType;
     members: UserType[];
@@ -62,7 +62,7 @@ export const getProjectById = async (
     return {
       ...project.toObject(),
       sprints,
-    } as ProjectWithSprintsType;
+    } as ProjectType;
   }
 
   return project.toObject();

@@ -1,12 +1,12 @@
 import { getIssuesBySprintId } from '../issue/issue.services';
+import { SprintType } from './sprint.dto';
 import { Sprint } from './sprint.model';
 import { SprintOptions } from './sprint.schema';
-import { SprintWithIssuesType } from './sprint.types';
 
 export const getSprintById = async (
   sprintId: string,
   options?: SprintOptions,
-): Promise<SprintWithIssuesType> => {
+): Promise<SprintType> => {
   const sprint = await Sprint.findById(sprintId);
 
   if (!sprint) {
@@ -17,7 +17,7 @@ export const getSprintById = async (
     const sprintWithIssues = {
       ...sprint.toObject(),
       issues: await getIssuesBySprintId(sprint.id),
-    } as unknown as SprintWithIssuesType;
+    } as unknown as SprintType;
 
     return sprintWithIssues;
   }
@@ -28,7 +28,7 @@ export const getSprintById = async (
 export const getSprintsByProjectId = async (
   projectId: string,
   options: SprintOptions,
-): Promise<SprintWithIssuesType[]> => {
+): Promise<SprintType[]> => {
   const sprints = await Sprint.find({ project: projectId });
 
   if (options?.includeIssues) {
@@ -39,8 +39,8 @@ export const getSprintsByProjectId = async (
     return sprints.map((sprint) => {
       return {
         ...sprint.toObject(),
-        issues: issues.filter((issue) => issue.sprint.toString() === sprint.id),
-      } as unknown as SprintWithIssuesType;
+        issues: issues.filter((issue) => issue.sprintId === sprint.id),
+      } as unknown as SprintType;
     });
   }
 

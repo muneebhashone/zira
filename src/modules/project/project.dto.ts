@@ -5,8 +5,8 @@ export const projectSchema = z.object({
   id: z.string(),
   name: z.string().min(1),
   description: z.string().optional(),
-  owner: userSchema,
+  owner: userSchema.partial(),
   members: z.array(userSchema).optional(),
 });
 
-export type Project = z.infer<typeof projectSchema>;
+export type ProjectType = z.infer<typeof projectSchema>;

@@ -5,4 +5,4 @@ export const labelSchema = z.object({
   color: z.string(),
 });
 
-export type Label = z.infer<typeof labelSchema>;
+export type LabelType = z.infer<typeof labelSchema>;

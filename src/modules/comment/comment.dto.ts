@@ -8,4 +8,4 @@ export const commentSchema = z.object({
   issue: issueSchema,
 });
 
-export type Comment = z.infer<typeof commentSchema>;
+export type CommentType = z.infer<typeof commentSchema>;
