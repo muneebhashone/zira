@@ -10,14 +10,14 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     volumes:
-      - mongodb_typescript_backend_toolkit:/data/db
+      - mongodb_zira:/data/db
 
   redis:
     image: redis:latest
     ports:
       - 6380:6379
     volumes:
-      - redis_typescript_backend_toolkit:/data
+      - redis_zira:/data
 
   postgres:
     image: postgres:15
@@ -28,12 +28,9 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - postgres_typescript_backend_toolkit:/var/lib/postgresql/data
+      - postgres_zira:/var/lib/postgresql/data
 
 volumes:
-  mongodb_typescript_backend_toolkit:
-    external: true
-  redis_typescript_backend_toolkit:
-    external: true
-  postgres_typescript_backend_toolkit:
-    external: true
+  mongodb_zira:
+  redis_zira:
+  postgres_zira:
